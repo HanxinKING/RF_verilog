@@ -1,0 +1,11 @@
++incdir+./rtl
+./rtl/cnn1d_feature_ram_fpga_mix12.v
+./rtl/cnn1d_complex_weight_rom_fpga_mix12.v
+./rtl/cnn1d_complex_conv_same_layer_fpga_mix12.v
+./rtl/cnn1d_complex_bn_sr_folded_core_fpga_mix12.v
+./rtl/cnn1d_pool_core_fpga_mix12.v
+./rtl/cnn1d_flatten_dense_core_fpga_mix12.v
+./rtl/cnn1d_vector_sr_core_fpga_mix12.v
+./rtl/cnn1d_dense_argmax_core_fpga_mix12.v
+./rtl/cnn1d_complex_feature_extractor9_deploy_top_fpga_mix12.v
+./rtl/cnn1d_complex_classifier_deploy_top_fpga_mix12.v

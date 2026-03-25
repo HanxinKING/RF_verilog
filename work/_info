@@ -1,0 +1,306 @@
+m255
+K4
+z2
+!s11f vlog 2020.4 2020.10, Oct 13 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dF:/RF_cnn/CONV1_21/project_1
+T_opt
+!s110 1774446913
+VmRA:DonQi?RcI<jEfUnkk1
+04 50 4 work cnn1d_complex_classifier_deploy_fpga_mix12_fast_tb fast 0
+=1-60452e0d4670-69c3e940-138-3fec
+o-quiet -auto_acc_if_foreign -work work +acc
+Z1 tCvgOpt 0
+n@_opt
+OL;O;2020.4;71
+vcnn1d_complex_bn_sr_folded_core_fpga_mix12
+Z2 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z3 !s110 1774446908
+!i10b 1
+!s100 hU7GB2LS5WbSUz@jibYU[3
+Z4 !s11b Dg1SIo80bB@j0V0VzS_@n1
+ICijkk=gCl[BXNS`8R;ci40
+S1
+R0
+w1774425134
+8./rtl/cnn1d_complex_bn_sr_folded_core_fpga_mix12.v
+F./rtl/cnn1d_complex_bn_sr_folded_core_fpga_mix12.v
+!i122 0
+L0 33 241
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+Z6 OL;L;2020.4;71
+r1
+!s85 0
+31
+Z7 !s108 1774446908.000000
+Z8 !s107 ./rtl/cnn1d_defs_fpga_mix12.vh|./rtl/cnn1d_complex_classifier_deploy_top_fpga_mix12.v|./rtl/cnn1d_complex_feature_extractor9_deploy_top_fpga_mix12.v|./rtl/cnn1d_dense_argmax_core_fpga_mix12.v|./rtl/cnn1d_vector_sr_core_fpga_mix12.v|./rtl/cnn1d_flatten_dense_core_fpga_mix12.v|./rtl/cnn1d_pool_core_fpga_mix12.v|./rtl/cnn1d_complex_bn_sr_folded_core_fpga_mix12.v|./rtl/cnn1d_complex_conv_same_layer_fpga_mix12.v|./rtl/cnn1d_complex_weight_rom_fpga_mix12.v|./rtl/cnn1d_feature_ram_fpga_mix12.v|
+Z9 !s90 -sv|-work|work|-f|modelsim_fpga_mix12_rtl.f|
+!i113 0
+Z10 o-sv -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z11 !s92 -sv -work work +incdir+./rtl -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vcnn1d_complex_classifier_deploy_fpga_mix12_fast_tb
+R2
+R3
+!i10b 1
+!s100 ?W6nT0>MMVF=H??VN<X:E2
+R4
+I2lVWdDVe3NAibIL0Qm3KA1
+S1
+R0
+w1774446892
+8./tb/cnn1d_complex_classifier_deploy_fpga_mix12_fast_tb.v
+F./tb/cnn1d_complex_classifier_deploy_fpga_mix12_fast_tb.v
+!i122 1
+L0 4 228
+R5
+R6
+r1
+!s85 0
+31
+R7
+!s107 ./rtl/cnn1d_defs_fpga_mix12.vh|./tb/cnn1d_complex_classifier_deploy_fpga_mix12_fast_tb.v|
+!s90 -sv|-work|work|-f|modelsim_fpga_mix12_tb_fast.f|
+!i113 0
+R10
+R11
+R1
+vcnn1d_complex_classifier_deploy_top_fpga_mix12
+R2
+R3
+!i10b 1
+!s100 MMDL4c<RH5<iVhzAK>5@h2
+R4
+IGXQV<>lM7iR8Ik=f8DE@G2
+S1
+R0
+Z12 w1774443397
+8./rtl/cnn1d_complex_classifier_deploy_top_fpga_mix12.v
+F./rtl/cnn1d_complex_classifier_deploy_top_fpga_mix12.v
+!i122 0
+L0 22 312
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vcnn1d_complex_conv_same_layer_fpga_mix12
+R2
+R3
+!i10b 1
+!s100 B6Afkl7cAM8jAMeSiFHOD1
+R4
+IeQngV`IIM[[]a9k3E3=^=0
+S1
+R0
+w1774424750
+8./rtl/cnn1d_complex_conv_same_layer_fpga_mix12.v
+F./rtl/cnn1d_complex_conv_same_layer_fpga_mix12.v
+!i122 0
+L0 36 285
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vcnn1d_complex_feature_extractor9_deploy_top_fpga_mix12
+R2
+R3
+!i10b 1
+!s100 ;aN8F>DWN6VA0nAXl1hMN2
+R4
+IGgSP70Hbf6D?zPMA2P:OB1
+S1
+R0
+R12
+8./rtl/cnn1d_complex_feature_extractor9_deploy_top_fpga_mix12.v
+F./rtl/cnn1d_complex_feature_extractor9_deploy_top_fpga_mix12.v
+!i122 0
+L0 23 245
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vcnn1d_complex_weight_rom_fpga_mix12
+R2
+R3
+!i10b 1
+!s100 zMmhmHBE2OP]=N`PkC3e=3
+R4
+I0QC_ZIY=:9MXMhW941=9l2
+S1
+R0
+w1774355728
+8./rtl/cnn1d_complex_weight_rom_fpga_mix12.v
+F./rtl/cnn1d_complex_weight_rom_fpga_mix12.v
+!i122 0
+L0 29 71
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vcnn1d_dense_argmax_core_fpga_mix12
+R2
+R3
+!i10b 1
+!s100 Q<lA9g5]>HQ?a8JCmTHo=1
+R4
+IiaI2<;3i=6o;;O8XkJgO:2
+S1
+R0
+Z13 w1774424821
+8./rtl/cnn1d_dense_argmax_core_fpga_mix12.v
+F./rtl/cnn1d_dense_argmax_core_fpga_mix12.v
+!i122 0
+L0 25 169
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vcnn1d_feature_ram_fpga_mix12
+R2
+R3
+!i10b 1
+!s100 h3QE2DZlM`f3SYcOeaM631
+R4
+I01DmJAe7[AaQ>EF`Ud=Wf2
+S1
+R0
+w1774424693
+8./rtl/cnn1d_feature_ram_fpga_mix12.v
+F./rtl/cnn1d_feature_ram_fpga_mix12.v
+!i122 0
+L0 26 38
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vcnn1d_flatten_dense_core_fpga_mix12
+R2
+R3
+!i10b 1
+!s100 jWRA7jY_hAWf:HjE3bjD53
+R4
+IA`3nnz=`PGI=S0IQ2NGa83
+S1
+R0
+R13
+8./rtl/cnn1d_flatten_dense_core_fpga_mix12.v
+F./rtl/cnn1d_flatten_dense_core_fpga_mix12.v
+!i122 0
+L0 16 185
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vcnn1d_pool_core_fpga_mix12
+R2
+R3
+!i10b 1
+!s100 G^[do5Yf[H76aQc57XOJ:2
+R4
+I[PWjXTgJXXRB65c5bjYmd3
+S1
+R0
+w1774424713
+8./rtl/cnn1d_pool_core_fpga_mix12.v
+F./rtl/cnn1d_pool_core_fpga_mix12.v
+!i122 0
+L0 28 161
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vcnn1d_vector_sr_core_fpga_mix12
+R2
+R3
+!i10b 1
+!s100 [PF?<6KNG1nFL_fUEL[X[1
+R4
+I;m?T0^][5f6@6fiL0]WlX2
+S1
+R0
+R13
+8./rtl/cnn1d_vector_sr_core_fpga_mix12.v
+F./rtl/cnn1d_vector_sr_core_fpga_mix12.v
+!i122 0
+L0 22 124
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1

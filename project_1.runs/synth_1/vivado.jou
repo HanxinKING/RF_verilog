@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Mar 25 20:57:28 2026
+# Process ID         : 39372
+# Current directory  : F:/RF_cnn/CONV1_21/project_1/project_1.runs/synth_1
+# Command line       : vivado.exe -log cnn1d_complex_classifier_deploy_top_fpga_mix12.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source cnn1d_complex_classifier_deploy_top_fpga_mix12.tcl
+# Log file           : F:/RF_cnn/CONV1_21/project_1/project_1.runs/synth_1/cnn1d_complex_classifier_deploy_top_fpga_mix12.vds
+# Journal file       : F:/RF_cnn/CONV1_21/project_1/project_1.runs/synth_1\vivado.jou
+# Running On         : LAPTOP-7FNV3QA5
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : Intel(R) Core(TM) i9-14900HX
+# CPU Frequency      : 2419 MHz
+# CPU Physical cores : 24
+# CPU Logical cores  : 32
+# Host memory        : 16961 MB
+# Swap memory        : 29914 MB
+# Total Virtual      : 46876 MB
+# Available Virtual  : 8223 MB
+#-----------------------------------------------------------
+source cnn1d_complex_classifier_deploy_top_fpga_mix12.tcl -notrace

@@ -1,0 +1,55 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Mar 25 20:16:54 2026
+# Process ID         : 58600
+# Current directory  : F:/RF_cnn/CONV1_21/project_1
+# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent7960 F:\RF_cnn\CONV1_21\project_1\project_1.xpr
+# Log file           : F:/RF_cnn/CONV1_21/project_1/vivado.log
+# Journal file       : F:/RF_cnn/CONV1_21/project_1\vivado.jou
+# Running On         : LAPTOP-7FNV3QA5
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : Intel(R) Core(TM) i9-14900HX
+# CPU Frequency      : 2419 MHz
+# CPU Physical cores : 24
+# CPU Logical cores  : 32
+# Host memory        : 16961 MB
+# Swap memory        : 24150 MB
+# Total Virtual      : 41111 MB
+# Available Virtual  : 1604 MB
+#-----------------------------------------------------------
+start_gui
+open_project F:/RF_cnn/CONV1_21/project_1/project_1.xpr
+
+update_compile_order -fileset sources_1
+remove_files  F:/RF_cnn/CONV1_21/project_1/rtl/cnn_real_embed9_top.v
+update_compile_order -fileset sim_1
+update_compile_order -fileset sim_1
+source F:/RF_cnn/conv1d_verilog/project1_fpga_mix12_cleanup.tcl
+source F:/RF_cnn/conv1d_verilog/project1_fpga_mix12_cleanup.tcl
+remove_files  {F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_complex_feature_extractor9_top.v F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_feature_extractor9_top.v F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_top.v F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_feature_ram.v F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_weight_rom.v F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_conv_layer.v F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_pool_core.v F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_gap_fc_core.v F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_complex_classifier_deploy_top.v}
+remove_files  F:/RF_cnn/CONV1_21/project_1/rtl/cnn1d_complex_bn_affine_core.v
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+launch_runs impl_1 -jobs 32
+wait_on_run impl_1
+reset_run synth_1
+launch_runs synth_1 -jobs 32
+wait_on_run synth_1
+copy_run -name synth_1_copy_1 [get_runs synth_1] 
+set_property part xcku035-fbva676-2-i [current_project]
+reset_run synth_1
+launch_runs synth_1 -jobs 32
+wait_on_run synth_1
+synth_design -rtl -rtl_skip_mlo -name rtl_1
+copy_run -name synth_1_copy_2 [get_runs synth_1] 
+set_property part xcku115-flvf1924-1-i [current_project]
+reset_run synth_1
+launch_runs synth_1 -jobs 32
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 32
+wait_on_run synth_1

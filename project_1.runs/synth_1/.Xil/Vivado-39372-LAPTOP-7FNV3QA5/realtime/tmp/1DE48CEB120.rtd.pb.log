@@ -1,0 +1,16 @@
+xilinx rtfpga
+rt::do_reinfer_area_combined 0
+DSP Report: Generating DSP u_bn_sr5/feat_rd_addr2, operation Mode is: (D+(A:0x1))*(B:0x3e).
+DSP Report: operator u_bn_sr5/feat_rd_addr2 is absorbed into DSP u_bn_sr5/feat_rd_addr2.
+DSP Report: operator u_bn_sr5/feat_rd_addr3 is absorbed into DSP u_bn_sr5/feat_rd_addr2.
+DSP Report: Generating DSP u_bn_sr4/feat_rd_addr2, operation Mode is: (D+(A:0x1))*(B:0x7d).
+DSP Report: operator u_bn_sr4/feat_rd_addr2 is absorbed into DSP u_bn_sr4/feat_rd_addr2.
+DSP Report: operator u_bn_sr4/feat_rd_addr3 is absorbed into DSP u_bn_sr4/feat_rd_addr2.
+DSP Report: Generating DSP u_bn_sr3/feat_rd_addr2, operation Mode is: (D+(A:0x1))*(B:0xfa).
+DSP Report: operator u_bn_sr3/feat_rd_addr2 is absorbed into DSP u_bn_sr3/feat_rd_addr2.
+DSP Report: operator u_bn_sr3/feat_rd_addr3 is absorbed into DSP u_bn_sr3/feat_rd_addr2.
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\u_bn_sr5/feat_rd_addr_reg[17] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\u_bn_sr3/state_reg[3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\u_bn_sr4/state_reg[3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\u_bn_sr5/state_reg[3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\u_bn_sr5/feat_wr_addr_reg[17] )
