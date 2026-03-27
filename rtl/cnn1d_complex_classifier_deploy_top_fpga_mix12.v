@@ -53,6 +53,7 @@ module cnn1d_complex_classifier_deploy_top_fpga_mix12 #(
     parameter integer LOAD_SR10_GATE     = 0,
     parameter integer LOAD_DENSE2_W      = 0,
     parameter integer LOAD_DENSE2_B      = 0,
+    parameter integer LOAD_DENSE2_SHIFT  = 0,
     parameter CONV_W_REAL_FILE           = "",
     parameter CONV_W_IMAG_FILE           = "",
     parameter CONV_B_REAL_FILE           = "",
@@ -61,7 +62,8 @@ module cnn1d_complex_classifier_deploy_top_fpga_mix12 #(
     parameter DENSE1_B_FILE              = "",
     parameter SR10_GATE_FILE             = "",
     parameter DENSE2_W_FILE              = "",
-    parameter DENSE2_B_FILE              = ""
+    parameter DENSE2_B_FILE              = "",
+    parameter DENSE2_SHIFT_FILE          = ""
 ) (
     input                                 clk,
     input                                 rst_n,
@@ -97,27 +99,27 @@ module cnn1d_complex_classifier_deploy_top_fpga_mix12 #(
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire sr10_done;
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire dense2_done;
 
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] feat_out_addr;
+    wire [`CNN_ADDR_W-1:0] feat_out_addr;
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] feat_out_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] dense1_feat_rd_addr;
+    wire [`CNN_ADDR_W-1:0] dense1_feat_rd_addr;
 
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire dense1_wr_en;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] dense1_wr_addr;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] dense1_wr_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] dense1_mem_rd_addr;
+    wire dense1_wr_en;
+    wire [`CNN_ADDR_W-1:0] dense1_wr_addr;
+    wire signed [`CNN_FEAT_W-1:0] dense1_wr_data;
+    wire [`CNN_ADDR_W-1:0] dense1_mem_rd_addr;
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] dense1_mem_rd_data;
 
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] sr10_rd_addr;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire sr10_wr_en;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] sr10_wr_addr;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] sr10_wr_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] sr10_mem_rd_addr;
+    wire [`CNN_ADDR_W-1:0] sr10_rd_addr;
+    wire sr10_wr_en;
+    wire [`CNN_ADDR_W-1:0] sr10_wr_addr;
+    wire signed [`CNN_FEAT_W-1:0] sr10_wr_data;
+    wire [`CNN_ADDR_W-1:0] sr10_mem_rd_addr;
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] sr10_mem_rd_data;
 
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] dense2_feat_rd_addr;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire dense2_score_valid;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_CLASS_W-1:0] dense2_score_class_idx;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_ACC_W-1:0] dense2_score_class_value;
+    wire [`CNN_ADDR_W-1:0] dense2_feat_rd_addr;
+    wire dense2_score_valid;
+    wire [`CNN_CLASS_W-1:0] dense2_score_class_idx;
+    wire signed [`CNN_ACC_W-1:0] dense2_score_class_value;
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_CLASS_W-1:0] dense2_class_idx;
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_ACC_W-1:0] dense2_class_score;
 
@@ -129,7 +131,7 @@ module cnn1d_complex_classifier_deploy_top_fpga_mix12 #(
     assign dense1_mem_rd_addr = ((state == ST_SR10_START) || (state == ST_SR10_WAIT)) ? sr10_rd_addr : ADDR_ZERO;
     assign sr10_mem_rd_addr = ((state == ST_DENSE2_START) || (state == ST_DENSE2_WAIT)) ? dense2_feat_rd_addr : ADDR_ZERO;
 
-    cnn1d_complex_feature_extractor9_deploy_top_fpga_mix12 #(
+    (* DONT_TOUCH = "TRUE" *) cnn1d_complex_feature_extractor9_deploy_top_fpga_mix12 #(
         .INPUT_LEN(INPUT_LEN),
         .INPUT_COMPLEX_CH(INPUT_COMPLEX_CH),
         .STAGE_COMPLEX_CH(STAGE_COMPLEX_CH),
@@ -171,7 +173,7 @@ module cnn1d_complex_classifier_deploy_top_fpga_mix12 #(
         .done(feat_done)
     );
 
-    cnn1d_feature_ram_fpga_mix12 #(
+    (* DONT_TOUCH = "TRUE" *) cnn1d_feature_ram_fpga_mix12 #(
         .DATA_W(`CNN_FEAT_W),
         .DEPTH(2048)
     ) u_dense1_mem (
@@ -183,7 +185,7 @@ module cnn1d_complex_classifier_deploy_top_fpga_mix12 #(
         .rd_data(dense1_mem_rd_data)
     );
 
-    cnn1d_feature_ram_fpga_mix12 #(
+    (* DONT_TOUCH = "TRUE" *) cnn1d_feature_ram_fpga_mix12 #(
         .DATA_W(`CNN_FEAT_W),
         .DEPTH(2048)
     ) u_sr10_mem (
@@ -195,7 +197,7 @@ module cnn1d_complex_classifier_deploy_top_fpga_mix12 #(
         .rd_data(sr10_mem_rd_data)
     );
 
-    cnn1d_flatten_dense_core_fpga_mix12 #(
+    (* DONT_TOUCH = "TRUE" *) cnn1d_flatten_dense_core_fpga_mix12 #(
         .FEAT_LEN(1),
         .CHANNELS(FINAL_FEAT_DIM),
         .OUT_DIM(DENSE1_DIM),
@@ -219,7 +221,7 @@ module cnn1d_complex_classifier_deploy_top_fpga_mix12 #(
         .done(dense1_done)
     );
 
-    cnn1d_vector_sr_core_fpga_mix12 #(
+    (* DONT_TOUCH = "TRUE" *) cnn1d_vector_sr_core_fpga_mix12 #(
         .VEC_LEN(DENSE1_DIM),
         .GATE_SHIFT(SR_SHIFT),
         .LOAD_GATE(LOAD_SR10_GATE),
@@ -239,14 +241,16 @@ module cnn1d_complex_classifier_deploy_top_fpga_mix12 #(
         .done(sr10_done)
     );
 
-    cnn1d_dense_argmax_core_fpga_mix12 #(
+    (* DONT_TOUCH = "TRUE" *) cnn1d_dense_argmax_core_fpga_mix12 #(
         .IN_DIM(DENSE1_DIM),
         .NUM_CLASSES(NUM_CLASSES),
         .ACT_SHIFT(DENSE2_SHIFT),
         .LOAD_FC_W(LOAD_DENSE2_W),
         .LOAD_FC_B(LOAD_DENSE2_B),
+        .LOAD_FC_SHIFT(LOAD_DENSE2_SHIFT),
         .FC_W_FILE(DENSE2_W_FILE),
-        .FC_B_FILE(DENSE2_B_FILE)
+        .FC_B_FILE(DENSE2_B_FILE),
+        .FC_SHIFT_FILE(DENSE2_SHIFT_FILE)
     ) u_dense2 (
         .clk(clk),
         .rst_n(rst_n),

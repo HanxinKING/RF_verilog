@@ -19,6 +19,7 @@
 // - addr = base + idx
 // ============================================================
 
+(* KEEP_HIERARCHY = "TRUE" *)
 module cnn1d_vector_sr_core_fpga_mix12 #(
     parameter integer VEC_LEN     = 1024,
     parameter integer GATE_SHIFT  = 0,

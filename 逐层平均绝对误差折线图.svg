@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">浮点与定点逐层平均绝对误差折线图</title>
+  <desc id="desc">展示 pool1 到 pool9 以及 dense1、sr10、dense2_logits 的平均绝对误差变化趋势</desc>
+  <defs>
+    <style>
+      .title {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 34px;
+        font-weight: 700;
+        fill: #000000;
+      }
+      .subtitle {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        fill: #000000;
+      }
+      .axis {
+        stroke: #000000;
+        stroke-width: 3;
+      }
+      .grid {
+        stroke: #d9dde4;
+        stroke-width: 1.5;
+        stroke-dasharray: 6 6;
+      }
+      .tick {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 15px;
+        fill: #000000;
+      }
+      .xlabel {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        fill: #000000;
+      }
+      .ylabel {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        fill: #000000;
+      }
+      .note {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 16px;
+        fill: #000000;
+      }
+      .line {
+        fill: none;
+        stroke: #16a34a;
+        stroke-width: 6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .point {
+        fill: #16a34a;
+        stroke: #ffffff;
+        stroke-width: 3;
+      }
+      .point-strong {
+        fill: #15803d;
+        stroke: #ffffff;
+        stroke-width: 4;
+      }
+      .value {
+        font-family: "Consolas", "Microsoft YaHei", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        fill: #000000;
+      }
+      .callout {
+        fill: #f0fdf4;
+        stroke: #86efac;
+        stroke-width: 2;
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="900" fill="#ffffff"/>
+
+  <!-- Plot area -->
+  <rect x="140" y="160" width="1320" height="610" fill="#ffffff"/>
+
+  <!-- Horizontal grid lines -->
+  <line x1="180" y1="700" x2="1420" y2="700" class="grid"/>
+  <line x1="180" y1="596" x2="1420" y2="596" class="grid"/>
+  <line x1="180" y1="492" x2="1420" y2="492" class="grid"/>
+  <line x1="180" y1="388" x2="1420" y2="388" class="grid"/>
+  <line x1="180" y1="284" x2="1420" y2="284" class="grid"/>
+  <line x1="180" y1="180" x2="1420" y2="180" class="grid"/>
+
+  <!-- Axes -->
+  <line x1="180" y1="180" x2="180" y2="700" class="axis"/>
+  <line x1="180" y1="700" x2="1420" y2="700" class="axis"/>
+
+  <!-- Data polyline -->
+  <polyline class="line"
+    points="
+      210,697.85
+      323,692.69
+      436,692.31
+      549,685.66
+      662,678.12
+      775,664.75
+      888,659.78
+      1001,610.20
+      1114,557.32
+      1227,628.98
+      1340,688.65
+      1453,231.56
+    "/>
+
+  <!-- Data points -->
+  <circle cx="210" cy="697.85" r="8" class="point"/>
+  <circle cx="323" cy="692.69" r="8" class="point"/>
+  <circle cx="436" cy="692.31" r="8" class="point"/>
+  <circle cx="549" cy="685.66" r="8" class="point"/>
+  <circle cx="662" cy="678.12" r="8" class="point"/>
+  <circle cx="775" cy="664.75" r="8" class="point"/>
+  <circle cx="888" cy="659.78" r="8" class="point"/>
+  <circle cx="1001" cy="610.20" r="8" class="point"/>
+  <circle cx="1114" cy="557.32" r="8" class="point"/>
+  <circle cx="1227" cy="628.98" r="8" class="point"/>
+  <circle cx="1340" cy="688.65" r="8" class="point"/>
+  <circle cx="1453" cy="231.56" r="11" class="point-strong"/>
+
+  <!-- Numeric labels -->
+  <text x="132" y="706" class="tick">0.00</text>
+  <text x="132" y="602" class="tick">0.04</text>
+  <text x="132" y="498" class="tick">0.08</text>
+  <text x="132" y="394" class="tick">0.12</text>
+  <text x="132" y="290" class="tick">0.16</text>
+  <text x="132" y="186" class="tick">0.20</text>
+
+  <!-- Layer names -->
+  <text x="210" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 210 748)">pool1</text>
+  <text x="323" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 323 748)">pool2</text>
+  <text x="436" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 436 748)">pool3</text>
+  <text x="549" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 549 748)">pool4</text>
+  <text x="662" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 662 748)">pool5</text>
+  <text x="775" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 775 748)">pool6</text>
+  <text x="888" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 888 748)">pool7</text>
+  <text x="1001" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 1001 748)">pool8</text>
+  <text x="1114" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 1114 748)">pool9</text>
+  <text x="1227" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 1227 748)">dense1</text>
+  <text x="1340" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 1340 748)">sr10</text>
+  <text x="1453" y="748" text-anchor="middle" class="xlabel" transform="rotate(-32 1453 748)">dense2_logits</text>
+
+  <!-- Selected values -->
+  <text x="985" y="586" class="value">0.034537</text>
+  <text x="1090" y="532" class="value">0.054876</text>
+  <text x="1200" y="605" class="value">0.027316</text>
+  <text x="1310" y="664" class="value">0.004364</text>
+  <text x="1372" y="210" class="value">0.180169</text>
+
+</svg>

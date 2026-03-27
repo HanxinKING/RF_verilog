@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">整体技术路线流程图</title>
+  <desc id="desc">从浮点模型加载到一致性与性能分析的 FPGA Mix12 项目流程图</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f6fbff"/>
+      <stop offset="100%" stop-color="#eef4ff"/>
+    </linearGradient>
+    <linearGradient id="cardA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eef5ff"/>
+      <stop offset="100%" stop-color="#d8e7ff"/>
+    </linearGradient>
+    <linearGradient id="cardB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ebfbf3"/>
+      <stop offset="100%" stop-color="#d5f5e7"/>
+    </linearGradient>
+    <linearGradient id="cardC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff7ea"/>
+      <stop offset="100%" stop-color="#fde7bf"/>
+    </linearGradient>
+    <linearGradient id="cardD" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8effd"/>
+      <stop offset="100%" stop-color="#ead9f7"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#94a3b8" flood-opacity="0.24"/>
+    </filter>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#16a34a"/>
+    </marker>
+    <style>
+      .title {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 34px;
+        font-weight: 700;
+        fill: #000000;
+      }
+      .subtitle {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        fill: #000000;
+      }
+      .lane {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        fill: #000000;
+      }
+      .step {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        fill: #000000;
+      }
+      .note {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        fill: #000000;
+      }
+      .caption {
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        fill: #000000;
+      }
+      .arrowline {
+        stroke: #16a34a;
+        stroke-width: 5;
+        fill: none;
+        marker-end: url(#arrow);
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="140" cy="120" r="110" fill="#dbeafe" opacity="0.45"/>
+  <circle cx="1470" cy="780" r="140" fill="#d1fae5" opacity="0.45"/>
+  <circle cx="1270" cy="120" r="90" fill="#fde68a" opacity="0.32"/>
+
+  <text x="90" y="92" class="title">整体技术路线</text>
+  <text x="90" y="128" class="subtitle">FPGA Mix12 新流程：从浮点参考到 RTL 验证的完整闭环</text>
+
+  <text x="110" y="205" class="lane">Python / 模型与量化侧</text>
+  <text x="110" y="555" class="lane">RTL / 仿真与结果分析侧</text>
+
+  <rect x="90" y="230" width="300" height="140" rx="26" fill="url(#cardA)" filter="url(#shadow)"/>
+  <text x="240" y="288" text-anchor="middle" class="step">浮点模型加载</text>
+  <text x="240" y="324" text-anchor="middle" class="note">读取 Keras / HDF5 权重</text>
+  <text x="240" y="348" text-anchor="middle" class="note">确定标准模型来源</text>
+
+  <rect x="470" y="230" width="300" height="140" rx="26" fill="url(#cardA)" filter="url(#shadow)"/>
+  <text x="620" y="288" text-anchor="middle" class="step">浮点推理</text>
+  <text x="620" y="324" text-anchor="middle" class="note">生成浮点分类结果</text>
+  <text x="620" y="348" text-anchor="middle" class="note">导出中间层参考输出</text>
+
+  <rect x="850" y="230" width="300" height="140" rx="26" fill="url(#cardB)" filter="url(#shadow)"/>
+  <text x="1000" y="288" text-anchor="middle" class="step">定点量化与校准</text>
+  <text x="1000" y="324" text-anchor="middle" class="note">计算 shift 与量化参数</text>
+  <text x="1000" y="348" text-anchor="middle" class="note">形成定点参考链路</text>
+
+  <rect x="1230" y="230" width="280" height="140" rx="26" fill="url(#cardB)" filter="url(#shadow)"/>
+  <text x="1370" y="288" text-anchor="middle" class="step">.mem 参数导出</text>
+  <text x="1370" y="324" text-anchor="middle" class="note">导出权重、偏置与 shift</text>
+  <text x="1370" y="348" text-anchor="middle" class="note">供 RTL 直接加载</text>
+
+  <rect x="240" y="580" width="340" height="150" rx="26" fill="url(#cardC)" filter="url(#shadow)"/>
+  <text x="410" y="640" text-anchor="middle" class="step">RTL / ModelSim 仿真</text>
+  <text x="410" y="676" text-anchor="middle" class="note">加载输入样本与 .mem 参数</text>
+  <text x="410" y="700" text-anchor="middle" class="note">完成批量推理与分类</text>
+
+  <rect x="650" y="580" width="300" height="150" rx="26" fill="url(#cardC)" filter="url(#shadow)"/>
+  <text x="800" y="640" text-anchor="middle" class="step">结果表生成</text>
+  <text x="800" y="676" text-anchor="middle" class="note">输出 rtl_results.csv</text>
+  <text x="800" y="700" text-anchor="middle" class="note">输出 rtl_logits.csv</text>
+
+  <rect x="1020" y="580" width="360" height="150" rx="26" fill="url(#cardD)" filter="url(#shadow)"/>
+  <text x="1200" y="640" text-anchor="middle" class="step">一致性与性能分析</text>
+  <text x="1200" y="676" text-anchor="middle" class="note">对比浮点 / 定点 / RTL</text>
+  <text x="1200" y="700" text-anchor="middle" class="note">统计准确率、混淆矩阵与逐层误差</text>
+
+  <path d="M390 300 H455" class="arrowline"/>
+  <path d="M770 300 H835" class="arrowline"/>
+  <path d="M1150 300 H1215" class="arrowline"/>
+  <path d="M1370 385 V480 H410 V565" class="arrowline"/>
+  <path d="M580 655 H635" class="arrowline"/>
+  <path d="M950 655 H1005" class="arrowline"/>
+
+  <rect x="92" y="778" width="1416" height="82" rx="20" fill="#ffffff" opacity="0.88"/>
+  <text x="122" y="824" class="caption">主线结论：采用“浮点参考 → 定点参考 → RTL 验证”的三级闭环流程，确保每一步都可追踪、可比对、可解释。</text>
+</svg>

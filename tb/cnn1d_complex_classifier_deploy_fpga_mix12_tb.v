@@ -86,6 +86,7 @@ module cnn1d_complex_classifier_deploy_fpga_mix12_tb;
         .LOAD_SR10_GATE(1),
         .LOAD_DENSE2_W(1),
         .LOAD_DENSE2_B(1),
+        .LOAD_DENSE2_SHIFT(1),
         .CONV_W_REAL_FILE("mem/fpga_mix12_demo/conv_w_real.mem"),
         .CONV_W_IMAG_FILE("mem/fpga_mix12_demo/conv_w_imag.mem"),
         .CONV_B_REAL_FILE("mem/fpga_mix12_demo/conv_b_real.mem"),
@@ -94,7 +95,8 @@ module cnn1d_complex_classifier_deploy_fpga_mix12_tb;
         .DENSE1_B_FILE("mem/fpga_mix12_demo/dense1_b.mem"),
         .SR10_GATE_FILE("mem/fpga_mix12_demo/sr10_gate.mem"),
         .DENSE2_W_FILE("mem/fpga_mix12_demo/dense2_w.mem"),
-        .DENSE2_B_FILE("mem/fpga_mix12_demo/dense2_b.mem")
+        .DENSE2_B_FILE("mem/fpga_mix12_demo/dense2_b.mem"),
+        .DENSE2_SHIFT_FILE("mem/fpga_mix12_demo/dense2_shift.mem")
     ) dut (
         .clk(clk),
         .rst_n(rst_n),

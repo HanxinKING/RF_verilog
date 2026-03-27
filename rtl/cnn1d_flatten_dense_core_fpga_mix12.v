@@ -13,6 +13,7 @@
 // 这是一个顺序 MAC 实现，适合先搭通完整网络结构。
 // ============================================================
 
+(* KEEP_HIERARCHY = "TRUE" *)
 module cnn1d_flatten_dense_core_fpga_mix12 #(
     parameter integer FEAT_LEN     = 9,
     parameter integer CHANNELS     = 64,
@@ -38,6 +39,8 @@ module cnn1d_flatten_dense_core_fpga_mix12 #(
 );
 
     localparam integer FLAT_DIM = FEAT_LEN * CHANNELS;
+    localparam integer FC_W_DEPTH = OUT_DIM * FLAT_DIM;
+    localparam integer INIT_CHUNK = 32768;
 
     localparam S_IDLE  = 3'd0;
     localparam S_BIAS  = 3'd1;
@@ -52,10 +55,12 @@ module cnn1d_flatten_dense_core_fpga_mix12 #(
     reg [`CNN_WADDR_W-1:0] flat_idx;
     reg signed [`CNN_ACC_W-1:0] acc_reg;
 
-    reg signed [`CNN_MIX12_DENSE1_W_W-1:0] fc_w_mem [0:(OUT_DIM*FLAT_DIM)-1];
+    reg signed [`CNN_MIX12_DENSE1_W_W-1:0] fc_w_mem [0:FC_W_DEPTH-1];
     reg signed [`CNN_ACC_W-1:0]  fc_b_mem [0:OUT_DIM-1];
 
     integer idx;
+    integer base_idx;
+    integer chunk_idx;
 
     wire signed [(`CNN_FEAT_W+`CNN_MIX12_DENSE1_W_W):0] mac_term;
     wire signed [(`CNN_FEAT_W+`CNN_MIX12_DENSE1_W_W+1):0] acc_next_full;
@@ -108,8 +113,15 @@ module cnn1d_flatten_dense_core_fpga_mix12 #(
     endfunction
 
     initial begin
-        for (idx = 0; idx < OUT_DIM*FLAT_DIM; idx = idx + 1) begin
-            fc_w_mem[idx] = {`CNN_MIX12_DENSE1_W_W{1'b0}};
+        // Vivado synthesis ignores a single initialization loop once the loop
+        // trip count exceeds its default limit, so clear the large Dense1 ROM
+        // in chunks before optionally loading the deployed weights.
+        for (base_idx = 0; base_idx < FC_W_DEPTH; base_idx = base_idx + INIT_CHUNK) begin
+            for (chunk_idx = base_idx;
+                 (chunk_idx < FC_W_DEPTH) && (chunk_idx < (base_idx + INIT_CHUNK));
+                 chunk_idx = chunk_idx + 1) begin
+                fc_w_mem[chunk_idx] = {`CNN_MIX12_DENSE1_W_W{1'b0}};
+            end
         end
         for (idx = 0; idx < OUT_DIM; idx = idx + 1) begin
             fc_b_mem[idx] = {`CNN_ACC_W{1'b0}};

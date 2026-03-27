@@ -4,19 +4,16 @@
 // ============================================================
 // 面向 Keras ComplexCNN 的 9 层复值特征提取顶层
 // ------------------------------------------------------------
-// 这版顶层用于承接 SlimSEI / FastPSGD 里的未剪枝 64 通道模型。
-//
-// 与此前“数学复值友好”的版本相比，这里更强调和 Keras 代码语义一致：
 // 1. Conv1D 使用复卷积，但输出对实部/虚部分别做 ReLU
 // 2. BN 使用从 Keras 推理图折叠出来的 2x2 仿射
 // 3. SR 使用每个复通道一组 gate，实部/虚部共用
 // 4. MaxPooling1D 按 Keras 的普通通道池化语义执行
-//
-// 特别说明：
-// - Keras 的 MaxPooling1D 是“按每个平面通道独立池化”
-// - 它不会按复数模值比较
-// - 因此这里池化阶段直接复用实值的 cnn1d_pool_core，
-//   但通道数设置为 2 * STAGE_COMPLEX_CH
+/*
+Keras 的 MaxPooling1D 是“按每个平面通道独立池化”
+它不会按复数模值比较
+因此这里池化阶段直接复用实值的 cnn1d_pool_core，
+但通道数设置为 2 * STAGE_COMPLEX_CH
+*/
 // ============================================================
 
 (* DONT_TOUCH = "TRUE", KEEP_HIERARCHY = "TRUE" *)
@@ -115,43 +112,43 @@ module cnn1d_complex_feature_extractor9_deploy_top_fpga_mix12 #(
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire bn_active   = (state == ST_BN_START)   || (state == ST_BN_WAIT);
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire pool_active = (state == ST_POOL_START) || (state == ST_POOL_WAIT);
 
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] mem0_rd_addr;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] mem1_rd_addr;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] mem2_rd_addr;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] mem0_rd_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] mem1_rd_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] mem2_rd_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire mem0_wr_en, mem1_wr_en, mem2_wr_en;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] mem0_wr_addr, mem1_wr_addr, mem2_wr_addr;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] mem0_wr_data, mem1_wr_data, mem2_wr_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] load_data_ext;
+    wire [`CNN_ADDR_W-1:0] mem0_rd_addr;
+    wire [`CNN_ADDR_W-1:0] mem1_rd_addr;
+    wire [`CNN_ADDR_W-1:0] mem2_rd_addr;
+    wire signed [`CNN_FEAT_W-1:0] mem0_rd_data;
+    wire signed [`CNN_FEAT_W-1:0] mem1_rd_data;
+    wire signed [`CNN_FEAT_W-1:0] mem2_rd_data;
+    wire mem0_wr_en, mem1_wr_en, mem2_wr_en;
+    wire [`CNN_ADDR_W-1:0] mem0_wr_addr, mem1_wr_addr, mem2_wr_addr;
+    wire signed [`CNN_FEAT_W-1:0] mem0_wr_data, mem1_wr_data, mem2_wr_data;
+    wire signed [`CNN_FEAT_W-1:0] load_data_ext;
 
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] conv_rd_addr [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire                   conv_wr_en   [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] conv_wr_addr [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] conv_wr_data [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_WADDR_W-1:0] conv_weight_addr [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_BADDR_W-1:0] conv_bias_addr [0:8];
+    wire [`CNN_ADDR_W-1:0] conv_rd_addr [0:8];
+    wire                   conv_wr_en   [0:8];
+    wire [`CNN_ADDR_W-1:0] conv_wr_addr [0:8];
+    wire signed [`CNN_FEAT_W-1:0] conv_wr_data [0:8];
+    wire [`CNN_WADDR_W-1:0] conv_weight_addr [0:8];
+    wire [`CNN_BADDR_W-1:0] conv_bias_addr [0:8];
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire conv_done [0:8];
 
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] bn_rd_addr [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire                   bn_wr_en   [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] bn_wr_addr [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] bn_wr_data [0:8];
+    wire [`CNN_ADDR_W-1:0] bn_rd_addr [0:8];
+    wire                   bn_wr_en   [0:8];
+    wire [`CNN_ADDR_W-1:0] bn_wr_addr [0:8];
+    wire signed [`CNN_FEAT_W-1:0] bn_wr_data [0:8];
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire bn_done [0:8];
 
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] pool_rd_addr [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire                   pool_wr_en   [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_ADDR_W-1:0] pool_wr_addr [0:8];
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_FEAT_W-1:0] pool_wr_data [0:8];
+    wire [`CNN_ADDR_W-1:0] pool_rd_addr [0:8];
+    wire                   pool_wr_en   [0:8];
+    wire [`CNN_ADDR_W-1:0] pool_wr_addr [0:8];
+    wire signed [`CNN_FEAT_W-1:0] pool_wr_data [0:8];
     (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire pool_done [0:8];
 
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_WADDR_W-1:0] weight_addr = conv_active ? conv_weight_addr[stage_idx] : {`CNN_WADDR_W{1'b0}};
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire [`CNN_BADDR_W-1:0] bias_addr   = conv_active ? conv_bias_addr[stage_idx]   : {`CNN_BADDR_W{1'b0}};
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_DATA_W-1:0] weight_real_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_DATA_W-1:0] weight_imag_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_ACC_W-1:0]  bias_real_data;
-    (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) wire signed [`CNN_ACC_W-1:0]  bias_imag_data;
+    wire [`CNN_WADDR_W-1:0] weight_addr = conv_active ? conv_weight_addr[stage_idx] : {`CNN_WADDR_W{1'b0}};
+    wire [`CNN_BADDR_W-1:0] bias_addr   = conv_active ? conv_bias_addr[stage_idx]   : {`CNN_BADDR_W{1'b0}};
+    wire signed [`CNN_DATA_W-1:0] weight_real_data;
+    wire signed [`CNN_DATA_W-1:0] weight_imag_data;
+    wire signed [`CNN_ACC_W-1:0]  bias_real_data;
+    wire signed [`CNN_ACC_W-1:0]  bias_imag_data;
 
     assign load_data_ext = $signed(load_data);
 
@@ -173,19 +170,19 @@ module cnn1d_complex_feature_extractor9_deploy_top_fpga_mix12 #(
     assign mem2_wr_addr = bn_wr_addr[stage_idx];
     assign mem2_wr_data = bn_wr_data[stage_idx];
 
-    cnn1d_feature_ram_fpga_mix12 #(.DATA_W(`CNN_FEAT_W), .DEPTH(RAM_DEPTH)) u_mem0 (
+    (* DONT_TOUCH = "TRUE" *) cnn1d_feature_ram_fpga_mix12 #(.DATA_W(`CNN_FEAT_W), .DEPTH(RAM_DEPTH)) u_mem0 (
         .clk(clk), .wr_en(mem0_wr_en), .wr_addr(mem0_wr_addr), .wr_data(mem0_wr_data), .rd_addr(mem0_rd_addr), .rd_data(mem0_rd_data)
     );
 
-    cnn1d_feature_ram_fpga_mix12 #(.DATA_W(`CNN_FEAT_W), .DEPTH(RAM_DEPTH)) u_mem1 (
+    (* DONT_TOUCH = "TRUE" *) cnn1d_feature_ram_fpga_mix12 #(.DATA_W(`CNN_FEAT_W), .DEPTH(RAM_DEPTH)) u_mem1 (
         .clk(clk), .wr_en(mem1_wr_en), .wr_addr(mem1_wr_addr), .wr_data(mem1_wr_data), .rd_addr(mem1_rd_addr), .rd_data(mem1_rd_data)
     );
 
-    cnn1d_feature_ram_fpga_mix12 #(.DATA_W(`CNN_FEAT_W), .DEPTH(RAM_DEPTH)) u_mem2 (
+    (* DONT_TOUCH = "TRUE" *) cnn1d_feature_ram_fpga_mix12 #(.DATA_W(`CNN_FEAT_W), .DEPTH(RAM_DEPTH)) u_mem2 (
         .clk(clk), .wr_en(mem2_wr_en), .wr_addr(mem2_wr_addr), .wr_data(mem2_wr_data), .rd_addr(mem2_rd_addr), .rd_data(mem2_rd_data)
     );
 
-    cnn1d_complex_weight_rom_fpga_mix12 #(
+    (* DONT_TOUCH = "TRUE" *) cnn1d_complex_weight_rom_fpga_mix12 #(
         .CONV_W_DEPTH(CONV_W_DEPTH),
         .CONV_B_DEPTH(CONV_B_DEPTH),
         .LOAD_CONV_W_REAL(LOAD_CONV_W_REAL),

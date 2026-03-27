@@ -22,14 +22,17 @@
 // - weight_addr = class * IN_DIM + feature
 // ============================================================
 
+(* KEEP_HIERARCHY = "TRUE" *)
 module cnn1d_dense_argmax_core_fpga_mix12 #(
     parameter integer IN_DIM      = 1024,
     parameter integer NUM_CLASSES = 7,
     parameter integer ACT_SHIFT   = 9,
     parameter integer LOAD_FC_W   = 0,
     parameter integer LOAD_FC_B   = 0,
+    parameter integer LOAD_FC_SHIFT = 0,
     parameter FC_W_FILE           = "",
-    parameter FC_B_FILE           = ""
+    parameter FC_B_FILE           = "",
+    parameter FC_SHIFT_FILE       = ""
 ) (
     input                                 clk,
     input                                 rst_n,
@@ -63,6 +66,7 @@ module cnn1d_dense_argmax_core_fpga_mix12 #(
 
     reg signed [`CNN_MIX12_DENSE2_W_W-1:0] fc_w_mem [0:(NUM_CLASSES*IN_DIM)-1];
     reg signed [`CNN_ACC_W-1:0]  fc_b_mem [0:NUM_CLASSES-1];
+    reg        [7:0]             fc_shift_mem [0:NUM_CLASSES-1];
 
     integer idx;
 
@@ -70,11 +74,13 @@ module cnn1d_dense_argmax_core_fpga_mix12 #(
     wire signed [(`CNN_FEAT_W+`CNN_MIX12_DENSE2_W_W+1):0] fc_sum_full;
     wire signed [`CNN_ACC_W-1:0] fc_sum;
     wire signed [`CNN_ACC_W-1:0] score_value;
+    wire [7:0] class_shift;
 
     assign weight_index = (cls_cnt * IN_DIM) + feat_cnt;
     assign fc_sum_full = $signed(acc_reg) + ($signed(feat_rd_data) * $signed(fc_w_mem[weight_index]));
     assign fc_sum = sat_acc_from_full(fc_sum_full);
-    assign score_value = fc_sum >>> ACT_SHIFT;
+    assign class_shift = fc_shift_mem[cls_cnt];
+    assign score_value = fc_sum >>> class_shift;
 
     function signed [`CNN_ACC_W-1:0] sat_acc_from_full;
         input signed [(`CNN_FEAT_W+`CNN_MIX12_DENSE2_W_W+1):0] value;
@@ -99,6 +105,7 @@ module cnn1d_dense_argmax_core_fpga_mix12 #(
         end
         for (idx = 0; idx < NUM_CLASSES; idx = idx + 1) begin
             fc_b_mem[idx] = {`CNN_ACC_W{1'b0}};
+            fc_shift_mem[idx] = ACT_SHIFT[7:0];
         end
 
         if (LOAD_FC_W != 0) begin
@@ -109,6 +116,11 @@ module cnn1d_dense_argmax_core_fpga_mix12 #(
         if (LOAD_FC_B != 0) begin
             $display("INFO: loading DENSE_ARGMAX_FC_B from %s", FC_B_FILE);
             $readmemh(FC_B_FILE, fc_b_mem);
+        end
+
+        if (LOAD_FC_SHIFT != 0) begin
+            $display("INFO: loading DENSE_ARGMAX_FC_SHIFT from %s", FC_SHIFT_FILE);
+            $readmemh(FC_SHIFT_FILE, fc_shift_mem);
         end
     end
 
