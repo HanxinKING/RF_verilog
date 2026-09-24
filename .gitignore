@@ -50,3 +50,7 @@ mem/fpga_mix12_batch_7x50/*
 !mem/fpga_mix12_batch_7x50/rtl_logits.csv
 !mem/fpga_mix12_batch_7x50/float_confusion.csv
 !mem/fpga_mix12_batch_7x50/rtl_confusion.csv
+
+# Vivado rotated backup logs
+vivado_*.backup.jou
+vivado_*.backup.log
